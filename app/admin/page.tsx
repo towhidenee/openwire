@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { BarChart3, FileText, Image, LayoutDashboard, Mail, Tags, Users } from "lucide-react";
 import { authors, categories, posts, tags } from "@/lib/demo-data";
+import { AdminEditor } from "./admin-editor";
 
 const modules = [
   ["Post management", "Create, edit, delete, schedule, feature, and mark breaking/video posts.", FileText],
@@ -15,13 +15,6 @@ const modules = [
 export const metadata = { title: "Admin Dashboard" };
 
 export default function AdminPage() {
-  const stats = [
-    ["Posts", posts.length],
-    ["Users", authors.length + 1],
-    ["Categories", categories.length],
-    ["Views", posts.reduce((sum, post) => sum + post.views, 0).toLocaleString()]
-  ];
-
   return (
     <section className="container mt-8">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -29,16 +22,9 @@ export default function AdminPage() {
           <p className="text-xs font-black uppercase tracking-[0.28em] text-wire">Secure admin</p>
           <h1 className="headline mt-2 text-5xl font-black">OpenWire Dashboard</h1>
         </div>
-        <Link href="/api/posts" className="rounded-full bg-ink px-5 py-3 text-sm font-black text-white">Posts API</Link>
+        <p className="max-w-md text-sm leading-6 text-muted">Edit demo content, manage story flags, and prepare SEO fields from one dashboard.</p>
       </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map(([label, value]) => (
-          <div key={label} className="rounded-lg border border-black/10 bg-white p-5">
-            <p className="text-sm font-bold text-muted">{label}</p>
-            <p className="mt-2 text-4xl font-black">{value}</p>
-          </div>
-        ))}
-      </div>
+      <AdminEditor initialPosts={posts} categories={categories} authors={authors} />
       <div className="mt-8 grid gap-5 lg:grid-cols-2">
         {modules.map(([title, description, Icon]) => (
           <div key={title as string} className="rounded-lg border border-black/10 bg-white p-5">
